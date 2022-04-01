@@ -1,33 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import ScreenLayout from './ScreenLayout';
 import {HistoryItem} from './HistoryItem';
-import {meditationsStorage} from '../utils/storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  deleteMeditation,
+  fetchMeditations,
+} from '../redux/history/history.thunk';
 
 export const HistoryScreen = ({navigation}) => {
-  const getMeditations = async () => {
-    const meditations = await meditationsStorage.get();
-    setMeditations(meditations.slice().reverse());
-  };
+  const meditations = useSelector(state => state.history.meditations);
 
-  // todo: add delete item functionality
-  const [meditations, setMeditations] = useState();
+  const dispatch = useDispatch();
   useEffect(() => {
-    getMeditations();
-  }, []);
+    dispatch(fetchMeditations());
+  }, [dispatch]);
 
-  const deleteMeditation = async (id) => {
-    meditationsStorage.delete(id)
-    setMeditations(prev => prev.filter(meditation => meditation.id !== id))
-  }
+  const handleMeditationLongPress = async id => {
+    dispatch(deleteMeditation(id));
+  };
 
   return (
     <ScreenLayout title={'History'} navigation={navigation}>
       <FlatList
         style={styles.list}
-        data={meditations}
+        data={meditations.slice().reverse()}
         keyExtractor={meditation => meditation.id}
-        renderItem={({item}) => <HistoryItem data={item} onLongPress={deleteMeditation}/>}
+        renderItem={({item}) => (
+          <HistoryItem data={item} onLongPress={handleMeditationLongPress} />
+        )}
       />
     </ScreenLayout>
   );

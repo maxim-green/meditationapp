@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import {Navbar} from './Navbar';
-import {Timer} from './Timer';
 import {HistoryScreen} from './HistoryScreen';
 import {TimerScreen} from './TimerScreen';
 import {SettingsScreen} from './SettingsScreen';
+import {store} from '../redux/store';
+import {Provider, useDispatch} from 'react-redux';
+import {fetchSettings} from '../redux/settings/settings.thunk';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchSettings());
+  }, [dispatch]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -23,5 +28,13 @@ export default function App() {
         <Stack.Screen name={'Settings'} component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+export default function AppContainer() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
   );
 }

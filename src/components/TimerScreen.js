@@ -1,33 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Timer} from './Timer';
 import ScreenLayout from './ScreenLayout';
-import {meditationsStorage, settingsStorage} from '../utils/storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {addMeditation} from '../redux/history/history.thunk';
+import {setSettings} from '../redux/settings/settings.thunk';
 
 export function TimerScreen({navigation}) {
-  const [meditationDuration, setMeditationDuration] = useState();
-  const [volume, setVolume] = useState()
+  const dispatch = useDispatch();
+  const duration = useSelector(state => state.settings.settings.duration);
+  const volume = useSelector(state => state.settings.settings.volume);
 
-  const getDefaultMeditationDuration = async () => {
-    setMeditationDuration(await settingsStorage.getDefaultDuration());
+  const onMeditationDone = async data => {
+    dispatch(addMeditation(data));
+    dispatch(setSettings({duration: data.duration}));
   };
-  const getVolume = async () => {
-    setVolume(await settingsStorage.getVolume());
-  };
-
-  const onMedidationDone = async data => {
-    await meditationsStorage.add(data);
-    await settingsStorage.setDefaultDuration(data.duration);
-  };
-
-  useEffect(() => {
-    getDefaultMeditationDuration();
-    getVolume()
-  }, []);
 
   return (
     <ScreenLayout title={'Timer'} navigation={navigation}>
-      {meditationDuration && (
-        <Timer time={meditationDuration / 60} volume={volume} onDone={onMedidationDone} />
+      {duration && (
+        <Timer time={duration / 60} volume={volume} onDone={onMeditationDone} />
       )}
     </ScreenLayout>
   );

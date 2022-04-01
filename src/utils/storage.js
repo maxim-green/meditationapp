@@ -1,46 +1,29 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const settingsStorage = {
-  async setDefaultDuration(duration) {
+  async set(settings) {
     try {
-      await AsyncStorage.setItem('defaultDuration', duration.toString())
+      const updatedSettings = {...(await this.get()), ...settings};
+      await AsyncStorage.setItem('settings', JSON.stringify(updatedSettings));
+      return updatedSettings;
     } catch (e) {
-      console.log(e)
-    }
-  },
-  async getDefaultDuration() {
-    try {
-      const duration = await AsyncStorage.getItem('defaultDuration')
-      if (duration) {
-        return Number.parseInt(duration)
-      } else {
-        return 20
-      }
-    } catch(e) {
-      console.log(e)
+      console.log(e);
     }
   },
 
-  async setVolume(volume) {
+  async get() {
     try {
-      await AsyncStorage.setItem('volume', volume.toString())
-    } catch (e) {
-      console.log(e)
-    }
-  },
-  async getVolume() {
-    try {
-      const volume = await AsyncStorage.getItem('volume')
-      if (volume) {
-        return Number.parseFloat(volume)
+      const settings = await AsyncStorage.getItem('settings');
+      if (settings) {
+        return JSON.parse(settings);
       } else {
-        return 0.5
+        return {};
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
-}
+  },
+};
 
 export const meditationsStorage = {
   async add(meditationData) {
@@ -48,6 +31,7 @@ export const meditationsStorage = {
       const storedMeditations = await this.get();
       const meditations = [...storedMeditations, meditationData];
       await AsyncStorage.setItem('meditations', JSON.stringify(meditations));
+      return meditationData;
     } catch (e) {
       console.log(e);
     }
@@ -59,7 +43,8 @@ export const meditationsStorage = {
       const meditations = storedMeditations.filter(
         meditation => id !== meditation.id,
       );
-      await AsyncStorage.setItem('meditations', JSON.stringify(meditations))
+      await AsyncStorage.setItem('meditations', JSON.stringify(meditations));
+      return id;
     } catch (e) {
       console.log(e);
     }
@@ -77,6 +62,4 @@ export const meditationsStorage = {
       console.log(e);
     }
   },
-}
-
-
+};
