@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HistoryScreen} from './HistoryScreen';
-import {TimerScreen} from './TimerScreen';
-import {SettingsScreen} from './SettingsScreen';
+import {HistoryScreen} from './_screens/HistoryScreen';
+import {TimerScreen} from './_screens/TimerScreen';
+import {SettingsScreen} from './_screens/SettingsScreen';
 import {store} from '../redux/store';
 import {Provider, useDispatch} from 'react-redux';
 import {fetchSettings} from '../redux/settings/settings.thunk';

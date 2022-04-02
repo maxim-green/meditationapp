@@ -1,23 +1,22 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import ScreenLayout from './ScreenLayout';
+import ScreenLayout from '../_layout/ScreenLayout';
 import Slider from '@react-native-community/slider';
 import {useDispatch, useSelector} from 'react-redux';
-import {setSettings} from '../redux/settings/settings.thunk';
-
-// todo: move to useSound hook. Hook loads volume setting and returns playsound function.
-import {playSound} from '../utils/sound';
-import bell from '../../assets/bell.mp3';
+import {setSettings} from '../../redux/settings/settings.thunk';
+import {useBell} from '../../utils/sound';
 
 export const SettingsScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const volume = useSelector(state => state.settings.settings.volume);
 
+  const bell = useBell();
+
   const [sliderValue, setSliderValue] = useState(volume);
   const volumeChangeHandler = value => setSliderValue(value);
   const volumeSlidingCompleteHandler = () => {
     dispatch(setSettings({volume: sliderValue}));
-    playSound(bell, sliderValue)
+    bell.play(sliderValue);
   };
 
   return (

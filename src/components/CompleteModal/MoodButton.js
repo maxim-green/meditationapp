@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, Pressable, StyleSheet } from "react-native";
+import theme from "../../styles/theme";
 
 export const MoodButton = (props) => {
   const {active, image, ...restProps} = props
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
   button: {
     height: 90,
     width: 90,
-    borderRadius: 35,
+    borderRadius: theme.borderRadius,
   },
   active: {
     backgroundColor: 'dodgerblue',

@@ -1,16 +1,16 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import {StatusBar, StyleSheet, View} from 'react-native';
 import {Navbar} from './Navbar';
-import { BottomNavigation } from "./BottomNavigation";
+import {BottomNavigation} from './BottomNavigation';
+import theme from "../../styles/theme";
 
 export default function ScreenLayout({title, children, navigation}) {
   return (
     <View style={styles.app}>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
-      <Navbar title={title} navigation={navigation}/>
+      <Navbar title={title} />
       <View style={styles.content}>{children}</View>
-      <BottomNavigation navigation={navigation}/>
+      <BottomNavigation navigation={navigation} />
     </View>
   );
 }
@@ -18,13 +18,14 @@ export default function ScreenLayout({title, children, navigation}) {
 const styles = StyleSheet.create({
   app: {
     flex: 1,
+    backgroundColor: theme.app.backgroundColor,
   },
   content: {
     flex: 1,
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
   },
   text: {
     alignItems: 'center',

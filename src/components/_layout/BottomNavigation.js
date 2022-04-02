@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 export const BottomNavigation = ({navigation}) => {
   return (
@@ -9,12 +9,17 @@ export const BottomNavigation = ({navigation}) => {
       <Pressable
         style={styles.navigationButton}
         onPress={() => navigation.navigate('Timer')}>
-        <Icon name={'timer-outline'} size={30}/>
+        <MaterialCommunityIcon name={'timer-outline'} size={30}/>
       </Pressable>
       <Pressable
         style={styles.navigationButton}
         onPress={() => navigation.navigate('History')}>
-        <Icon name={'history'} size={30}/>
+        <MaterialCommunityIcon name={'history'} size={30}/>
+      </Pressable>
+      <Pressable
+        style={styles.navigationButton}
+        onPress={() => navigation.navigate('Settings')}>
+        <MaterialIcon name={'settings'} size={30}/>
       </Pressable>
     </View>
   );

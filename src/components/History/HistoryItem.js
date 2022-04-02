@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, Pressable} from 'react-native';
-import bad from '../../assets/face-bad.png';
-import neutral from '../../assets/face-neutral.png';
-import good from '../../assets/face-good.png';
-import {getFormattedTime} from '../utils/functions';
+import bad from '../../../assets/face-bad.png';
+import neutral from '../../../assets/face-neutral.png';
+import good from '../../../assets/face-good.png';
+import {getFormattedTime} from '../../utils/functions';
 
 export const HistoryItem = ({data, onLongPress}) => {
   const imageSource =

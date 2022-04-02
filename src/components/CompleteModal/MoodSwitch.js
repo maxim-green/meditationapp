@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { MoodButton } from "./MoodButton";
-import faceBad from "../../assets/face-bad.png";
-import faceNeutral from "../../assets/face-neutral.png";
-import faceGood from "../../assets/face-good.png";
+import faceBad from "../../../assets/face-bad.png";
+import faceNeutral from "../../../assets/face-neutral.png";
+import faceGood from "../../../assets/face-good.png";
 
 
 export const MoodSwitch = ({ value, onChange }) => {
