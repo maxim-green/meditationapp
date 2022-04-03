@@ -7,7 +7,7 @@ import theme from "../../styles/theme";
 export default function ScreenLayout({title, children, navigation}) {
   return (
     <View style={styles.app}>
-      <StatusBar translucent={true} backgroundColor={'transparent'} />
+      <StatusBar translucent={true} backgroundColor={'transparent'} barStyle={theme.statusBar.barStyle} />
       <Navbar title={title} />
       <View style={styles.content}>{children}</View>
       <BottomNavigation navigation={navigation} />

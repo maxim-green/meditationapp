@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import Slider from '@react-native-community/slider';
-import {CompleteModal} from '../CompleteModal';
-import {getDate, getFormattedTime} from '../../utils/functions';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {getDate} from '../../utils/functions';
 import {useBell} from '../../utils/sound';
-import theme from '../../styles/theme';
 import {TimerControls} from './TimerControls';
+import {TimerSlider} from './TimerSlider';
+import {TimerDisplay} from './TimerDisplay';
+import {CompleteModal} from '../CompleteModal';
 
 export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
   const [secondsLeft, setSecondsLeft] = useState(time);
+  useEffect(() => setSecondsLeft(time), [time]);
   const [timerDuration, setTimerDuration] = useState(time);
   const [countdown, setCountdown] = useState(null);
   const [active, setActive] = useState(false);
@@ -16,7 +17,6 @@ export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
   const [stoppedAt, setStoppedAt] = useState(null);
   const [pausedAt, setPausedAt] = useState([]);
   const [completeModalShown, setCompleteModalShown] = useState(false);
-
   const bell = useBell();
 
   const start = () => {
@@ -75,7 +75,6 @@ export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
     bell.play(volume);
   }
 
-
   const onCompleteModalDone = (mood, text) => {
     setCompleteModalShown(false);
     onEnd({
@@ -90,18 +89,16 @@ export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <Text style={styles.time}>{getFormattedTime(secondsLeft)}</Text>
+    <View style={styles.timer}>
+      <View style={styles.displayWrapper}>
+        <TimerDisplay value={secondsLeft} />
+      </View>
+
       {!active && (
         <View style={styles.sliderWrapper}>
-          <Slider
-            {...theme.slider}
-            style={styles.slider}
-            minimumValue={1}
-            maximumValue={60}
-            step={1}
-            value={Math.floor(secondsLeft / 60)}
-            onValueChange={value => setSecondsLeft(value * 60)}
+          <TimerSlider
+            value={secondsLeft}
+            onValueChange={value => setSecondsLeft(value)}
           />
         </View>
       )}
@@ -123,7 +120,7 @@ export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  timer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -132,28 +129,12 @@ const styles = StyleSheet.create({
     marginBottom: 35,
     marginTop: 35,
   },
-
   sliderWrapper: {
     flexDirection: 'row',
     width: '100%',
   },
-  slider: {
-    width: '100%',
-  },
-  button: {
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 22,
-    letterSpacing: 1,
-  },
-  time: {
+  displayWrapper: {
     marginTop: 'auto',
     marginBottom: 'auto',
-    fontWeight: '200',
-    fontSize: 72,
-    color: theme.timer.color,
   },
 });

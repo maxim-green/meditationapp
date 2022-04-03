@@ -12,18 +12,20 @@ export const Navbar = ({title}) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    height: 80,
-    paddingTop: 35,
+    height: 75,
+    paddingTop: 25,
     paddingLeft: 20,
     paddingRight: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.navbar.backgroundColor,
+    backgroundColor: theme.titleBar.backgroundColor,
   },
   title: {
-    color: theme.navbar.color,
-    fontSize: 18,
-    letterSpacing: 1,
+    color: theme.titleBar.color,
+    fontSize: 24,
+    textTransform: 'uppercase',
+    fontWeight: '300',
+    letterSpacing: 2,
   },
 });

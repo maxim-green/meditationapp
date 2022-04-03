@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import theme from "../../styles/theme";
 
 export const BottomNavigation = ({navigation}) => {
   return (
@@ -9,17 +10,17 @@ export const BottomNavigation = ({navigation}) => {
       <Pressable
         style={styles.navigationButton}
         onPress={() => navigation.navigate('Timer')}>
-        <MaterialCommunityIcon name={'timer-outline'} size={30}/>
+        <MaterialCommunityIcon name={'timer-outline'} size={30} color={theme.bottomNav.color}/>
       </Pressable>
       <Pressable
         style={styles.navigationButton}
         onPress={() => navigation.navigate('History')}>
-        <MaterialCommunityIcon name={'history'} size={30}/>
+        <MaterialCommunityIcon name={'history'} size={30} color={theme.bottomNav.color}/>
       </Pressable>
       <Pressable
         style={styles.navigationButton}
         onPress={() => navigation.navigate('Settings')}>
-        <MaterialIcon name={'settings'} size={30}/>
+        <MaterialIcon name={'settings'} size={30} color={theme.bottomNav.color}/>
       </Pressable>
     </View>
   );
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#333',
+    backgroundColor: theme.bottomNav.backgroundColor,
   },
   navigationButton: {
     flex: 1,

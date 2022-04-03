@@ -1,24 +1,31 @@
 export default {
   app: {
-    backgroundColor: '#fff'
+    backgroundColor: '#F7FBFC',
+  },
+  statusBar: {
+    barStyle: 'dark-content',
+    color: '#769FCD',
+  },
+  titleBar: {
+    color: '#769FCD',
+    backgroundColor: '#F7FBFC',
   },
   button: {
-    color: '#fff',
-    backgroundColor: 'dodgerblue',
-    backgroundColorPressed: 'blue',
+    color: '#F7FBFC',
+    backgroundColor: '#769FCD',
+    backgroundColorPressed: '#214a7a',
   },
   slider: {
-    minimumTrackTintColor: '#ddd',
-    maximumTrackTintColor: '#ddd',
-    thumbTintColor: 'dodgerblue',
+    minimumTrackTintColor: '#B9D7EA',
+    maximumTrackTintColor: '#B9D7EA',
+    thumbTintColor: '#769FCD',
   },
-  navbar: {
-    color: '#fff',
-    backgroundColor: 'dodgerblue',
+  bottomNav: {
+    color: '#769FCD',
+    backgroundColor: '#F7FBFC',
   },
   timer: {
-    color: '#666',
+    color: '#769FCD',
   },
   borderRadius: 30,
-
-}
+};
