@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {getDate} from '../../utils/functions';
 import {useBell} from '../../utils/sound';
 import {TimerControls} from './TimerControls';
 import {TimerSlider} from './TimerSlider';
@@ -79,7 +78,7 @@ export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
     setCompleteModalShown(false);
     onEnd({
       id: Date.now().toString(),
-      date: getDate(),
+      date: Date.now(),
       duration: timerDuration,
       stoppedAt,
       pausedAt,

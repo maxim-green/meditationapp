@@ -1,5 +1,10 @@
+// todo should move that to hook useTheme.
+// export object in hook and return it
+
 export default {
+  borderRadius: 30,
   app: {
+    color: '#888',
     backgroundColor: '#F7FBFC',
   },
   statusBar: {
@@ -7,6 +12,10 @@ export default {
     color: '#769FCD',
   },
   titleBar: {
+    color: '#769FCD',
+    backgroundColor: '#F7FBFC',
+  },
+  bottomNav: {
     color: '#769FCD',
     backgroundColor: '#F7FBFC',
   },
@@ -20,12 +29,16 @@ export default {
     maximumTrackTintColor: '#B9D7EA',
     thumbTintColor: '#769FCD',
   },
-  bottomNav: {
-    color: '#769FCD',
-    backgroundColor: '#F7FBFC',
-  },
   timer: {
     color: '#769FCD',
   },
-  borderRadius: 30,
+  historyItem: {
+    borderColor: '#769FCD'
+  },
+  moodIcon: {
+    color: '#769FCD'
+  },
+  moonIcon: {
+    color: '#769FCD'
+  },
 };

@@ -3,21 +3,26 @@ import {Text, View, StyleSheet, Image, Pressable} from 'react-native';
 import bad from '../../../assets/face-bad.png';
 import neutral from '../../../assets/face-neutral.png';
 import good from '../../../assets/face-good.png';
-import {getFormattedTime} from '../../utils/functions';
+import {
+  getFormattedDate,
+  getFormattedTime,
+  getMoonPhase,
+} from '../../utils/functions';
+import theme from '../../styles/theme';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const HistoryItem = ({data, onLongPress}) => {
-  const imageSource =
-    data.mood === 'bad' ? bad : data.mood === 'good' ? good : neutral;
-
   const longPressHandler = () => {
-    onLongPress(data.id)
-  }
+    onLongPress(data.id);
+  };
 
   return (
     <Pressable style={styles.wrapper} onLongPress={longPressHandler}>
-      <Text style={styles.date}>{data.date}</Text>
-      <Image source={imageSource} style={styles.moodImage} />
+      <MoodIcon mood={data.mood} />
+      <MoonPhase date={data.date} />
       <View style={styles.info}>
+        <Text style={styles.text}>{getFormattedDate(new Date(data.date))}</Text>
         <Text style={styles.text}>
           Duration: {Math.round(data.duration / 60)} minutes
         </Text>
@@ -40,35 +45,118 @@ export const HistoryItem = ({data, onLongPress}) => {
   );
 };
 
+export const MoodIcon = ({mood, size = 20, color = theme.moodIcon.color}) => {
+  return (
+    <View>
+      {mood === 'bad' && (
+        <EntypoIcon name={'emoji-sad'} size={20} color={theme.moodIcon.color} />
+      )}
+      {mood === 'neutral' && (
+        <EntypoIcon
+          name={'emoji-neutral'}
+          size={20}
+          color={theme.moodIcon.color}
+        />
+      )}
+      {mood === 'good' && (
+        <EntypoIcon
+          name={'emoji-happy'}
+          size={20}
+          color={theme.moodIcon.color}
+        />
+      )}
+    </View>
+  );
+};
+
+export const MoonPhase = ({date}) => {
+  const phase = getMoonPhase(date);
+  return (
+    <View>
+      {phase === 'New' && (
+        <MaterialCommunityIcon
+          name={'moon-new'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'Waxing Crescent' && (
+        <MaterialCommunityIcon
+          name={'moon-waxing-crescent'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'First Quarter' && (
+        <MaterialCommunityIcon
+          name={'moon-first-quarter'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'Waxing Gibbous' && (
+        <MaterialCommunityIcon
+          name={'moon-waxing-gibbous'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'Full' && (
+        <MaterialCommunityIcon
+          name={'moon-full'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'Waning Gibbous' && (
+        <MaterialCommunityIcon
+          name={'moon-waning-gibbous'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'Last Quarter' && (
+        <MaterialCommunityIcon
+          name={'moon-last-quarter'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      {phase === 'Waning Crescent' && (
+        <MaterialCommunityIcon
+          name={'moon-waning-crescent'}
+          size={20}
+          color={theme.moonIcon.color}
+        />
+      )}
+      <Text style={styles.text}>{phase}</Text>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   wrapper: {
-    position: 'relative',
     width: '100%',
-    flexDirection: 'row',
+    flex: 1,
     marginBottom: 10,
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25,
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-    color: '#333',
-    alignItems: 'center',
+    borderColor: theme.historyItem.borderColor,
+    borderRadius: theme.borderRadius,
+    alignItems: 'flex-start',
   },
   moodImage: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
   },
   info: {
-    paddingLeft: 20,
     height: '100%',
   },
-  date: {
-    position: 'absolute',
-    top: 4,
-    left: 8,
-    fontSize: 12,
-    color: '#999',
-  },
   text: {
-    color: '#999',
+    fontSize: 14,
+    color: theme.app.color,
   },
 });
