@@ -5,6 +5,8 @@ import Slider from '@react-native-community/slider';
 import {useDispatch, useSelector} from 'react-redux';
 import {setSettings} from '../../redux/settings/settings.thunk';
 import {useBell} from '../../utils/sound';
+import { CustomSlider } from "../_library/CustomSlider";
+import theme from "../../styles/theme";
 
 export const SettingsScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -21,13 +23,9 @@ export const SettingsScreen = ({navigation}) => {
 
   return (
     <ScreenLayout title={'Settings'} navigation={navigation}>
-      <View style={styles.sliderWrapper}>
+      <View style={styles.item}>
         <Text style={styles.settingsItemText}>Volume: </Text>
-        <Slider
-          minimumTrackTintColor={'#ddd'}
-          maximumTrackTintColor={'#ddd'}
-          thumbTintColor={'dodgerblue'}
-          style={styles.slider}
+        <CustomSlider
           minimumValue={0}
           maximumValue={1}
           step={0.01}
@@ -41,15 +39,13 @@ export const SettingsScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  item: {
+    width: '100%',
+  },
   settingsItemText: {
-    color: '#666',
+    color: theme.app.color,
     fontSize: 18,
     paddingBottom: 10,
-  },
-  sliderWrapper: {
-    width: '100%',
-  },
-  slider: {
-    width: '100%',
+    marginLeft: 15,
   },
 });

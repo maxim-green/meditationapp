@@ -1,159 +1,79 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, Pressable} from 'react-native';
-import bad from '../../../assets/face-bad.png';
-import neutral from '../../../assets/face-neutral.png';
-import good from '../../../assets/face-good.png';
-import {
-  getFormattedDate,
-  getFormattedTime,
-  getMoonPhase,
-} from '../../utils/functions';
+import {Pressable, StyleSheet} from 'react-native';
 import theme from '../../styles/theme';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {MoodIcon} from '../_library/MoodIcon';
+import {MoonPhaseIcon} from '../_library/MoonPhaseIcon';
+import {HistoryItemIcons} from './HistoryItemIcons';
+import {HistoryItemInfo} from './HistoryItemInfo';
 
 export const HistoryItem = ({data, onLongPress}) => {
+  const {id, mood, date, duration, pausedAt, stoppedAt, text} = data;
   const longPressHandler = () => {
-    onLongPress(data.id);
+    onLongPress(id);
   };
 
   return (
     <Pressable style={styles.wrapper} onLongPress={longPressHandler}>
-      <MoodIcon mood={data.mood} />
-      <MoonPhase date={data.date} />
-      <View style={styles.info}>
-        <Text style={styles.text}>{getFormattedDate(new Date(data.date))}</Text>
-        <Text style={styles.text}>
-          Duration: {Math.round(data.duration / 60)} minutes
-        </Text>
-        {!!data.text && <Text style={styles.text}>Note: {data.text}</Text>}
-        {!!data.pausedAt.length && (
-          <Text style={styles.text}>
-            Paused {data.pausedAt.length} times (at{' '}
-            {data.pausedAt.map(seconds => getFormattedTime(seconds)).join(', ')}
-            )
-          </Text>
-        )}
-        {!!data.stoppedAt && (
-          <Text style={styles.text}>
-            Completed prematurely on {getFormattedTime(data.stoppedAt)}
-          </Text>
-        )}
-        {!data.stoppedAt && <Text style={styles.text}>Completed fully</Text>}
-      </View>
+      <HistoryItemInfo
+        date={date}
+        duration={duration}
+        pausedAt={pausedAt}
+        stoppedAt={stoppedAt}
+        text={text}
+      />
+      <HistoryItemIcons>
+        <MoodIcon mood={mood} />
+        <MoonPhaseIcon date={date} />
+      </HistoryItemIcons>
     </Pressable>
-  );
-};
-
-export const MoodIcon = ({mood, size = 20, color = theme.moodIcon.color}) => {
-  return (
-    <View>
-      {mood === 'bad' && (
-        <EntypoIcon name={'emoji-sad'} size={20} color={theme.moodIcon.color} />
-      )}
-      {mood === 'neutral' && (
-        <EntypoIcon
-          name={'emoji-neutral'}
-          size={20}
-          color={theme.moodIcon.color}
-        />
-      )}
-      {mood === 'good' && (
-        <EntypoIcon
-          name={'emoji-happy'}
-          size={20}
-          color={theme.moodIcon.color}
-        />
-      )}
-    </View>
-  );
-};
-
-export const MoonPhase = ({date}) => {
-  const phase = getMoonPhase(date);
-  return (
-    <View>
-      {phase === 'New' && (
-        <MaterialCommunityIcon
-          name={'moon-new'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'Waxing Crescent' && (
-        <MaterialCommunityIcon
-          name={'moon-waxing-crescent'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'First Quarter' && (
-        <MaterialCommunityIcon
-          name={'moon-first-quarter'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'Waxing Gibbous' && (
-        <MaterialCommunityIcon
-          name={'moon-waxing-gibbous'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'Full' && (
-        <MaterialCommunityIcon
-          name={'moon-full'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'Waning Gibbous' && (
-        <MaterialCommunityIcon
-          name={'moon-waning-gibbous'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'Last Quarter' && (
-        <MaterialCommunityIcon
-          name={'moon-last-quarter'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      {phase === 'Waning Crescent' && (
-        <MaterialCommunityIcon
-          name={'moon-waning-crescent'}
-          size={20}
-          color={theme.moonIcon.color}
-        />
-      )}
-      <Text style={styles.text}>{phase}</Text>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     flex: 1,
     marginBottom: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingLeft: 25,
-    paddingRight: 25,
     borderWidth: 1,
     borderColor: theme.historyItem.borderColor,
     borderRadius: theme.borderRadius,
     alignItems: 'flex-start',
+    paddingLeft: 25,
+    paddingRight: 25,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
-  moodImage: {
-    width: 50,
-    height: 50,
+  infoItem: {
+    flexDirection: 'row',
+    marginBottom: 2,
+    marginTop: 2,
+  },
+  infoItemTitle: {
+    fontWeight: '700',
+    color: theme.app.color,
+    maxWidth: 80,
+    width: '100%',
+  },
+  infoItemText: {
+    flex: 1,
+    color: theme.app.color,
+  },
+  icons: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  icon: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
   },
   info: {
     height: '100%',
+    flex: 1,
   },
   text: {
     fontSize: 14,

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useBell} from '../../utils/sound';
 import {TimerControls} from './TimerControls';
-import {TimerSlider} from './TimerSlider';
+import {CustomSlider} from '../_library/CustomSlider';
 import {TimerDisplay} from './TimerDisplay';
 import {CompleteModal} from '../CompleteModal';
 
@@ -93,14 +93,18 @@ export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
         <TimerDisplay value={secondsLeft} />
       </View>
 
-      {!active && (
+      {/*{!active && (*/}
         <View style={styles.sliderWrapper}>
-          <TimerSlider
+          <CustomSlider
+            minimumValue={60}
+            maximumValue={3600}
+            step={60}
             value={secondsLeft}
             onValueChange={value => setSecondsLeft(value)}
+            disabled={active}
           />
         </View>
-      )}
+      {/*)}*/}
 
       <View style={styles.controlsWrapper}>
         <TimerControls

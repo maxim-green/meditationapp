@@ -2,7 +2,7 @@
 // export object in hook and return it
 
 export default {
-  borderRadius: 30,
+  borderRadius: 25,
   app: {
     color: '#888',
     backgroundColor: '#F7FBFC',

@@ -31,7 +31,6 @@ const getMoonAge = (date = new Date()) => {
 
 export const getMoonPhase = (date = new Date()) => {
   const age = getMoonAge(date);
-  console.log(date);
 
   if (age >= 27.68493 || age < 1.84566) {
     return 'New';
