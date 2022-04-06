@@ -6,7 +6,6 @@ export const Button = props => {
   const {children, width, height, ...restProps} = props;
   return (
     <Pressable
-      {...restProps}
       style={({pressed}) => [
         {
           backgroundColor: pressed
@@ -15,7 +14,9 @@ export const Button = props => {
         },
         styles.button,
         {width, height},
-      ]}>
+      ]}
+      {...restProps}
+    >
       <Text style={styles.buttonText}>{children}</Text>
     </Pressable>
   );

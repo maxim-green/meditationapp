@@ -1,26 +1,41 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import theme from "../../styles/theme";
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import theme from '../../styles/theme';
+import {useRoute} from '@react-navigation/native';
 
+// todo decompose
 export const BottomNavigation = ({navigation}) => {
+  const route = useRoute();
   return (
     <View style={styles.bottomNavigation}>
       <Pressable
-        style={styles.navigationButton}
+        style={[styles.navigationButton, route.name === 'Timer' && styles.navigationButtonActive]}
         onPress={() => navigation.navigate('Timer')}>
-        <MaterialCommunityIcon name={'timer-outline'} size={30} color={theme.bottomNav.color}/>
+        <MaterialCommunityIcon
+          name={'timer-outline'}
+          size={route.name === 'Timer' ? 30 : 25}
+          color={theme.bottomNav.color}
+        />
       </Pressable>
       <Pressable
-        style={styles.navigationButton}
+        style={[styles.navigationButton, route.name === 'History' && styles.navigationButtonActive]}
         onPress={() => navigation.navigate('History')}>
-        <MaterialCommunityIcon name={'history'} size={30} color={theme.bottomNav.color}/>
+        <MaterialCommunityIcon
+          name={'history'}
+          size={route.name === 'History'? 30 : 25}
+          color={theme.bottomNav.color}
+        />
       </Pressable>
       <Pressable
-        style={styles.navigationButton}
+        style={[styles.navigationButton, route.name === 'Settings' && styles.navigationButtonActive]}
         onPress={() => navigation.navigate('Settings')}>
-        <MaterialIcon name={'settings'} size={30} color={theme.bottomNav.color}/>
+        <MaterialIcon
+          name={'settings'}
+          size={route.name === 'Settings' ? 30 : 25}
+          color={theme.bottomNav.color}
+        />
       </Pressable>
     </View>
   );
@@ -33,11 +48,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: theme.bottomNav.backgroundColor,
+    ...theme.app.shadow,
   },
   navigationButton: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: 0.5,
+  },
+  navigationButtonActive: {
+    opacity: 1,
   },
   navigationButtonText: {
     color: 'white',

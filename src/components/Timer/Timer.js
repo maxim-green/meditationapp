@@ -127,10 +127,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   controlsWrapper: {
-    marginBottom: 35,
-    marginTop: 35,
+    marginTop: 40,
+    marginBottom: 20,
   },
   sliderWrapper: {
     flexDirection: 'row',

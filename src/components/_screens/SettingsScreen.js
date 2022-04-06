@@ -23,22 +23,29 @@ export const SettingsScreen = ({navigation}) => {
 
   return (
     <ScreenLayout title={'Settings'} navigation={navigation}>
-      <View style={styles.item}>
-        <Text style={styles.settingsItemText}>Volume: </Text>
-        <CustomSlider
-          minimumValue={0}
-          maximumValue={1}
-          step={0.01}
-          value={sliderValue}
-          onValueChange={volumeChangeHandler}
-          onSlidingComplete={volumeSlidingCompleteHandler}
-        />
+      <View style={styles.wrapper}>
+        <View style={styles.item}>
+          <Text style={styles.settingsItemText}>Volume: </Text>
+          <CustomSlider
+            minimumValue={0}
+            maximumValue={1}
+            step={0.01}
+            value={sliderValue}
+            onValueChange={volumeChangeHandler}
+            onSlidingComplete={volumeSlidingCompleteHandler}
+          />
+        </View>
       </View>
+
     </ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    padding: 20,
+    width: '100%',
+  },
   item: {
     width: '100%',
   },

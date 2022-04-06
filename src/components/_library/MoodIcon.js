@@ -9,21 +9,21 @@ export const MoodIcon = ({mood, size = 30, color = theme.moodIcon.color}) => {
         <EntypoIcon
           name={'emoji-sad'}
           size={size}
-          color={theme.moodIcon.color}
+          color={color || theme.moodIcon.color}
         />
       )}
       {mood === 'neutral' && (
         <EntypoIcon
           name={'emoji-neutral'}
           size={size}
-          color={theme.moodIcon.color}
+          color={color || theme.moodIcon.color}
         />
       )}
       {mood === 'good' && (
         <EntypoIcon
           name={'emoji-happy'}
           size={size}
-          color={theme.moodIcon.color}
+          color={color || theme.moodIcon.color}
         />
       )}
     </>

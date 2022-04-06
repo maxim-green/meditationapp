@@ -1,6 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import {Button} from '../_library/Button';
 import React from 'react';
+import theme from "../../styles/theme";
 
 export const TimerControls = ({
   active,

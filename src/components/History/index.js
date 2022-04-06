@@ -6,6 +6,7 @@ export const History = ({meditations, onItemLongPress}) => {
   return (
     <FlatList
       style={styles.list}
+      contentContainerStyle={styles.contentContainer}
       data={meditations.slice().reverse()}
       keyExtractor={meditation => meditation.id}
       renderItem={({item}) => (
@@ -19,5 +20,8 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     width: '100%',
+  },
+  contentContainer: {
+    padding: 20,
   },
 });

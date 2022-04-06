@@ -31,21 +31,22 @@ export const HistoryItem = ({data, onLongPress}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: theme.historyItem.borderColor,
     borderRadius: theme.borderRadius,
     alignItems: 'flex-start',
     paddingLeft: 25,
     paddingRight: 25,
     paddingTop: 20,
     paddingBottom: 20,
+    backgroundColor: 'white',
+    ...theme.app.shadow
   },
   infoItem: {
+    width: '100%',
     flexDirection: 'row',
     marginBottom: 2,
     marginTop: 2,

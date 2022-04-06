@@ -12,14 +12,17 @@ export const Navbar = ({title}) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    height: 75,
+    height: 80,
     paddingTop: 25,
     paddingLeft: 20,
     paddingRight: 20,
+    paddingBottom: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: theme.titleBar.backgroundColor,
+    zIndex: 5,
+    ...theme.app.shadow
   },
   title: {
     color: theme.titleBar.color,

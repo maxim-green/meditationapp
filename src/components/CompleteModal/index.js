@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
-import {View, Modal, Text, StyleSheet, TextInput} from 'react-native';
-import {Button} from '../_library/Button';
-import {MoodSwitch} from './MoodSwitch';
+import React, { useState } from "react";
+import { View, Modal, Text, StyleSheet, TextInput } from "react-native";
+import { Button } from "../_library/Button";
+import { MoodPicker } from "./MoodPicker";
 import theme from "../../styles/theme";
+import { CustomModal } from "../_library/CustomModal";
+import { NoteInput } from "./NoteInput";
 
-export const CompleteModal = ({onDone}) => {
-  const [mood, setMood] = useState('neutral');
-  const [text, setText] = useState('');
+export const CompleteModal = ({ onDone }) => {
+  const [mood, setMood] = useState("neutral");
+  const [text, setText] = useState("");
 
   const donePressHandler = () => {
     if (onDone) {
@@ -15,81 +17,50 @@ export const CompleteModal = ({onDone}) => {
   };
 
   return (
-    <Modal transparent={true}>
-      <View style={styles.centered}>
-        <View style={styles.modal}>
-          <Text style={styles.message}>Meditation completed!</Text>
-          <Text style={styles.text}>How are you feeling?</Text>
-          <View style={styles.row}>
-            <MoodSwitch value={'neutral'} onChange={mood => setMood(mood)} />
-          </View>
-          <TextInput
-            value={text}
-            onChangeText={text => setText(text)}
-            style={styles.input}
-            multiline={true}
-            textAlignVertical={'top'}
-            numberOfLines={6}
-            placeholder={'Any thoughts?'}
-            placeholderTextColor={'#ccc'}
-          />
-          <Button onPress={donePressHandler}>Done</Button>
-        </View>
-      </View>
-    </Modal>
+    <CustomModal>
+      <Text style={styles.title}>Meditation completed!</Text>
+
+      <Item caption={'How are you feeling?'}>
+        <MoodPicker value={"neutral"} onChange={mood => setMood(mood)} />
+      </Item>
+
+      <Item caption={'What are you thinking?'}>
+        <NoteInput
+          value={text}
+          onChangeText={text => setText(text)}
+        />
+      </Item>
+
+
+      <Button onPress={donePressHandler}>Done</Button>
+    </CustomModal>
   );
 };
 
+const Item = ({children, caption}) => {
+  return <View style={styles.item}>
+    <Text style={styles.label}>{caption}</Text>
+    {children}
+  </View>
+}
+
 const styles = StyleSheet.create({
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
+  title: {
+    fontSize: 20,
+    marginBottom: 5,
+    color: theme.completeModal.titleColor,
+    textTransform: "uppercase",
+    fontWeight: "300",
+    letterSpacing: 1,
+  },
+  item: {
     alignItems: 'center',
-  },
-
-  modal: {
-    width: '90%',
-    margin: 25,
-    padding: 25,
-    backgroundColor: 'white',
-    borderRadius: theme.borderRadius,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 10,
-  },
-
-  message: {
-    fontSize: 18,
-    marginBottom: 15,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-
-  text: {
-    color: '#999',
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: theme.borderRadius,
-    marginBottom: 25,
-    width: '100%',
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
-    fontSize: 18,
-    color: '#333',
-  },
-
-  row: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 15,
+    width: "100%",
     marginTop: 10,
+    marginBottom: 10,
+  },
+  label: {
+    color: theme.app.color,
+    marginBottom: 5,
   },
 });
