@@ -37,6 +37,25 @@ export const meditationsStorage = {
     }
   },
 
+  async update(payload) {
+    try {
+      const storedMeditations = await this.get();
+      const meditations = storedMeditations.map(meditation =>
+        meditation.id !== payload.id
+          ? meditation
+          : {
+              ...meditation,
+              ...payload,
+              pausedAt: payload.pausedAt ? [...meditation.pausedAt, payload.pausedAt] : meditation.pausedAt,
+            },
+      );
+      await AsyncStorage.setItem('meditations', JSON.stringify(meditations));
+      return meditations.find(meditation => meditation.id === payload.id);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   async delete(id) {
     try {
       const storedMeditations = await this.get();
@@ -58,6 +77,14 @@ export const meditationsStorage = {
       } else {
         return [];
       }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async clear() {
+    try {
+      await AsyncStorage.removeItem('meditations');
     } catch (e) {
       console.log(e);
     }

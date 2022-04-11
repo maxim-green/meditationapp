@@ -7,13 +7,17 @@ import {SettingsScreen} from './_screens/SettingsScreen';
 import {store} from '../redux/store';
 import {Provider, useDispatch} from 'react-redux';
 import {fetchSettings} from '../redux/settings/settings.thunk';
+import { initTimer } from "../redux/timer/timer.thunk";
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   const dispatch = useDispatch();
+
+  // todo rename settings reducer to app reducer and move logit to single initApp thunk
   useEffect(() => {
     dispatch(fetchSettings());
+    dispatch(initTimer())
   }, [dispatch]);
 
   return (

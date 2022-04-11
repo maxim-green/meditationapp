@@ -1,110 +1,70 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useBell} from '../../utils/sound';
 import {TimerControls} from './TimerControls';
 import {CustomSlider} from '../_library/CustomSlider';
 import {TimerDisplay} from './TimerDisplay';
 import {CompleteModal} from '../CompleteModal';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  finish,
+  pauseTimer,
+  resumeTimer,
+  setDuration,
+  startTimer,
+  stopTimer,
+} from '../../redux/timer/timer.thunk';
 
-export const Timer = ({time = 1800, volume = 0.5, onEnd}) => {
-  const [secondsLeft, setSecondsLeft] = useState(time);
-  useEffect(() => setSecondsLeft(time), [time]);
-  const [timerDuration, setTimerDuration] = useState(time);
-  const [countdown, setCountdown] = useState(null);
-  const [active, setActive] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [stoppedAt, setStoppedAt] = useState(null);
-  const [pausedAt, setPausedAt] = useState([]);
-  const [completeModalShown, setCompleteModalShown] = useState(false);
-  const bell = useBell();
+export const Timer = () => {
+  const dispatch = useDispatch();
+  const active = useSelector(state => state.timer.isActive);
+  const paused = useSelector(state => state.timer.isPaused);
+  const timeLeft = useSelector(state => state.timer.timeLeft);
+  const completeModalShown = useSelector(
+    state => state.timer.isCompleteModalShown,
+  );
 
   const start = () => {
-    setTimerDuration(secondsLeft);
-    setStoppedAt(null);
-    setPausedAt([]);
-    setActive(true);
-    if (!countdown) {
-      setCountdown(
-        setInterval(() => {
-          setSecondsLeft(prevSecondsLeft => prevSecondsLeft - 1);
-        }, 1000),
-      );
-    }
+    dispatch(startTimer());
   };
 
   const pause = () => {
-    setPaused(true);
-    setPausedAt(prev => [...prev, secondsLeft]);
-    if (countdown) {
-      clearInterval(countdown);
-    }
-    setCountdown(null);
+    dispatch(pauseTimer());
   };
 
   const resume = () => {
-    setPaused(false);
-    if (!countdown) {
-      setCountdown(
-        setInterval(() => {
-          setSecondsLeft(prevSecondsLeft => prevSecondsLeft - 1);
-        }, 1000),
-      );
-    }
-  };
-
-  const complete = () => {
-    if (countdown) {
-      clearInterval(countdown);
-    }
-    setCountdown(null);
-    setCompleteModalShown(true);
-    setActive(false);
-    setPaused(false);
-    setSecondsLeft(timerDuration);
+    dispatch(resumeTimer());
   };
 
   const stop = () => {
-    setStoppedAt(secondsLeft);
-    complete();
-    bell.play(volume);
+    dispatch(stopTimer());
   };
 
-  if (secondsLeft <= 0) {
-    complete();
-    bell.play(volume);
-  }
+  const durationChangeHandler = value => {
+    dispatch(setDuration(value));
+  };
 
   const onCompleteModalDone = (mood, text) => {
-    setCompleteModalShown(false);
-    onEnd({
-      id: Date.now().toString(),
-      date: Date.now(),
-      duration: timerDuration,
-      stoppedAt,
-      pausedAt,
-      mood,
-      text,
-    });
+    dispatch(finish({mood, text}));
   };
 
   return (
     <View style={styles.timer}>
       <View style={styles.displayWrapper}>
-        <TimerDisplay value={secondsLeft} />
+        <TimerDisplay value={timeLeft} />
       </View>
 
-      {/*{!active && (*/}
+      {!active && (
         <View style={styles.sliderWrapper}>
           <CustomSlider
             minimumValue={60}
             maximumValue={3600}
             step={60}
-            value={secondsLeft}
-            onValueChange={value => setSecondsLeft(value)}
+            value={timeLeft}
+            onValueChange={durationChangeHandler}
             disabled={active}
           />
         </View>
-      {/*)}*/}
+      )}
 
       <View style={styles.controlsWrapper}>
         <TimerControls

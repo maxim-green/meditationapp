@@ -57,3 +57,7 @@ export const getMoonPhase = (date = new Date()) => {
     return 'Waning Crescent';
   }
 };
+
+export const differenceInSeconds = (date1, date2) => {
+  return Math.round(Math.abs(date1 - date2) / 1000);
+};
