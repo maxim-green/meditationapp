@@ -6,6 +6,7 @@ class Timer {
     if (!this.interval) {
       this.startTime = Date.now();
       this.interval = BackgroundTimer.setInterval(() => {
+        console.log(this.timeLeft)
         this.onTick(this.timeLeft)
         this.timeLeft =
           this.duration - differenceInSeconds(this.startTime, Date.now());

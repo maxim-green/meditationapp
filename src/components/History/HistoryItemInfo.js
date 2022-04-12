@@ -1,13 +1,14 @@
 import {getFormattedDate, getFormattedTime} from '../../utils/functions';
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import theme from '../../styles/theme';
+import theme, { useTheme } from "../../styles/theme";
 
 export const InfoItem = ({title, children}) => {
+  const theme = useTheme()
   return (
     <View style={styles.infoItem}>
-      <Text style={styles.infoItemTitle}>{title}</Text>
-      <Text style={styles.infoItemText}>{children}</Text>
+      <Text style={[styles.infoItemTitle, theme.text]}>{title}</Text>
+      <Text style={[styles.infoItemText, theme.text]}>{children}</Text>
     </View>
   );
 };
@@ -50,12 +51,10 @@ const styles = StyleSheet.create({
   },
   infoItemTitle: {
     fontWeight: '700',
-    color: theme.app.color,
     maxWidth: 80,
     width: '100%',
   },
   infoItemText: {
     flex: 1,
-    color: theme.app.color,
   },
 })

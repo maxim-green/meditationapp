@@ -1,18 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {TimerControls} from './TimerControls';
-import {CustomSlider} from '../_library/CustomSlider';
-import {TimerDisplay} from './TimerDisplay';
-import {CompleteModal} from '../CompleteModal';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  finish,
-  pauseTimer,
-  resumeTimer,
-  setDuration,
-  startTimer,
-  stopTimer,
-} from '../../redux/timer/timer.thunk';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { TimerControls } from "./TimerControls";
+import { CustomSlider } from "../_library/CustomSlider";
+import { TimerDisplay } from "./TimerDisplay";
+import { CompleteModal } from "../CompleteModal";
+import { useDispatch, useSelector } from "react-redux";
+import { finish, pauseTimer, resumeTimer, startTimer, stopTimer } from "../../redux/timer/timer.thunk";
+import { setDuration } from "../../redux/app/app.thunk";
 
 export const Timer = () => {
   const dispatch = useDispatch();
@@ -53,8 +47,9 @@ export const Timer = () => {
         <TimerDisplay value={timeLeft} />
       </View>
 
-      {!active && (
+
         <View style={styles.sliderWrapper}>
+          {!active && (
           <CustomSlider
             minimumValue={60}
             maximumValue={3600}
@@ -63,8 +58,9 @@ export const Timer = () => {
             onValueChange={durationChangeHandler}
             disabled={active}
           />
+          )}
         </View>
-      )}
+
 
       <View style={styles.controlsWrapper}>
         <TimerControls
@@ -96,6 +92,7 @@ const styles = StyleSheet.create({
   sliderWrapper: {
     flexDirection: 'row',
     width: '100%',
+    height: 20,
   },
   displayWrapper: {
     marginTop: 'auto',

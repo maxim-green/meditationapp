@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addMeditation, deleteMeditation, fetchMeditations } from "./history.thunk";
+import { deleteMeditation, fetchMeditations } from "./history.thunk";
 
 const initialState = {
   meditations: [],
@@ -17,10 +17,6 @@ const historyReducer = createSlice({
       state.meditations = state.meditations.filter(
         meditation => meditation.id !== action.payload,
       );
-    });
-
-    builder.addCase(addMeditation.fulfilled, (state, action) => {
-      state.meditations.push(action.payload);
     });
   },
 });

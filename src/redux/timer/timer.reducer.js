@@ -2,10 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   complete,
   finish,
-  initTimer,
   pauseTimer,
   resumeTimer,
-  setDuration,
   startTimer,
   stopTimer,
   tick,
@@ -13,7 +11,6 @@ import {
 
 const initialState = {
   id: null,
-  duration: 1800,
   timeLeft: 1800,
   isActive: false,
   isPaused: false,
@@ -23,20 +20,15 @@ const initialState = {
 const timerReducer = createSlice({
   name: "settings",
   initialState,
+  reducers: {
+    setTimeLeft: (state, action) => {
+      state.timeLeft = action.payload
+    }
+  },
   extraReducers: builder => {
-    builder.addCase(initTimer.fulfilled, (state, action) => {
-      state.duration = action.payload;
-      state.timeLeft = action.payload;
-    });
-
     builder.addCase(startTimer.fulfilled, (state, action) => {
       state.id = action.payload.id;
       state.isActive = true;
-    });
-
-    builder.addCase(setDuration.fulfilled, (state, action) => {
-      state.timeLeft = action.payload;
-      state.duration = action.payload;
     });
 
     builder.addCase(tick.fulfilled, (state, action) => {
@@ -44,10 +36,10 @@ const timerReducer = createSlice({
     });
 
     builder.addCase(complete.fulfilled, (state, action) => {
+      state.timeLeft = action.payload
       state.isCompleteModalShown = true;
       state.isActive = false;
       state.isPaused = false;
-      state.timeLeft = state.duration;
     });
 
     builder.addCase(stopTimer.fulfilled, (state, action) => {
@@ -68,5 +60,7 @@ const timerReducer = createSlice({
     });
   },
 });
+
+export const {setTimeLeft} = timerReducer.actions
 
 export default timerReducer.reducer;

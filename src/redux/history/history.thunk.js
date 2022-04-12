@@ -7,12 +7,6 @@ export const fetchMeditations = createAsyncThunk(
     return await meditationsStorage.get();
   },
 );
-export const addMeditation = createAsyncThunk(
-  'history/addMeditation',
-  async meditationData => {
-    return await meditationsStorage.add(meditationData);
-  },
-);
 export const deleteMeditation = createAsyncThunk(
   'history/deleteMeditation',
   async id => {

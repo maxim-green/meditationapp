@@ -1,12 +1,13 @@
 import React from 'react';
 import {Modal, StyleSheet, View} from 'react-native';
-import theme from '../../styles/theme';
+import { useTheme } from "../../styles/theme";
 
 export const CustomModal = ({children}) => {
+  const theme = useTheme()
   return (
     <Modal transparent={true}>
       <View style={styles.wrapper}>
-        <View style={styles.modal}>{children}</View>
+        <View style={[styles.modal, theme.modal]}>{children}</View>
       </View>
     </Modal>
   );
@@ -24,9 +25,6 @@ const styles = StyleSheet.create({
     margin: 25,
     padding: 25,
     width: '90%',
-    backgroundColor: theme.modal.backgroundColor,
-    borderRadius: theme.borderRadius,
     alignItems: 'center',
-    ...theme.app.shadow,
   },
 });

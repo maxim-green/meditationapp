@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {MoodButton} from './MoodButton';
-import theme from '../../styles/theme';
 
 export const MoodPicker = ({value, onChange}) => {
   const [mood, setMood] = useState(value);
@@ -34,10 +33,6 @@ export const MoodPicker = ({value, onChange}) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    color: theme.app.color,
-    marginBottom: 5,
-  },
   buttons: {
     flexDirection: 'row',
     width: '95%',

@@ -1,9 +1,10 @@
 import {getMoonPhase} from '../../utils/functions';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from '../../styles/theme';
+import { useTheme } from "../../styles/theme";
 import React from 'react';
 
 export const MoonPhaseIcon = ({date, size = 30}) => {
+  const theme = useTheme()
   const phase = getMoonPhase(date);
   return (
     <>

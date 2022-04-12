@@ -5,20 +5,26 @@ import {HistoryScreen} from './_screens/HistoryScreen';
 import {TimerScreen} from './_screens/TimerScreen';
 import {SettingsScreen} from './_screens/SettingsScreen';
 import {store} from '../redux/store';
-import {Provider, useDispatch} from 'react-redux';
-import {fetchSettings} from '../redux/settings/settings.thunk';
-import { initTimer } from "../redux/timer/timer.thunk";
+import {Provider, useDispatch, useSelector} from 'react-redux';
+import {init} from '../redux/app/app.thunk';
+import {Text, View} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const initialized = useSelector(state => state.app.initialized);
   const dispatch = useDispatch();
-
-  // todo rename settings reducer to app reducer and move logit to single initApp thunk
   useEffect(() => {
-    dispatch(fetchSettings());
-    dispatch(initTimer())
+    dispatch(init());
   }, [dispatch]);
+
+  if (!initialized) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>

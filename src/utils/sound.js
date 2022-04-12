@@ -23,6 +23,6 @@ class Bell {
 export default new Bell()
 
 export const useBell = () => {
-  const volume = useSelector(state => state.settings.settings.volume);
+  const volume = useSelector(state => state.app.settings.volume);
   return new Bell('bell.mp3', volume);
 };

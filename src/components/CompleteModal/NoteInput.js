@@ -1,11 +1,12 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 import React from 'react';
-import theme from '../../styles/theme';
+import { useTheme } from "../../styles/theme";
 
 export const NoteInput = props => {
+  const theme = useTheme()
   return (
     <TextInput
-      style={styles.input}
+      style={[styles.input, theme.noteInput]}
       multiline={true}
       textAlignVertical={'top'}
       underlineColorAndroid={'transparent'}
@@ -17,16 +18,11 @@ export const NoteInput = props => {
 
 const styles = StyleSheet.create({
   input: {
-    borderWidth: 1,
-    borderColor: theme.noteInput.borderColor,
-    borderRadius: theme.borderRadius,
     marginBottom: 25,
     width: '100%',
     paddingLeft: 25,
     paddingRight: 25,
     paddingTop: 20,
     paddingBottom: 20,
-    fontSize: 18,
-    color: theme.app.color,
   },
 });

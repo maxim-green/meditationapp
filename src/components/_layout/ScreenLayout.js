@@ -2,11 +2,13 @@ import React from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {Navbar} from './Navbar';
 import {BottomNavigation} from './BottomNavigation';
-import theme from "../../styles/theme";
+import { useTheme } from "../../styles/theme";
 
 export default function ScreenLayout({title, children, navigation}) {
+  const theme = useTheme()
+
   return (
-    <View style={styles.app}>
+    <View style={[styles.app, theme.app]}>
       <StatusBar translucent={true} backgroundColor={'transparent'} barStyle={theme.statusBar.barStyle} />
       <Navbar title={title} />
       <View style={styles.content}>{children}</View>
@@ -18,7 +20,6 @@ export default function ScreenLayout({title, children, navigation}) {
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: theme.app.backgroundColor,
   },
   content: {
     flex: 1,
