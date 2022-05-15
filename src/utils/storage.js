@@ -17,7 +17,11 @@ export const settingsStorage = {
       if (settings) {
         return JSON.parse(settings);
       } else {
-        return {};
+        return {
+          theme: 'light',
+          duration: 1800,
+          volume: 0.5,
+        };
       }
     } catch (e) {
       console.log(e);

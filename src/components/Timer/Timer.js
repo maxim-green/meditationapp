@@ -13,6 +13,7 @@ export const Timer = () => {
   const active = useSelector(state => state.timer.isActive);
   const paused = useSelector(state => state.timer.isPaused);
   const timeLeft = useSelector(state => state.timer.timeLeft);
+  console.log(timeLeft)
   const completeModalShown = useSelector(
     state => state.timer.isCompleteModalShown,
   );

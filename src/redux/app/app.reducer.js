@@ -1,26 +1,26 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import { init, setDuration, setTheme, setVolume } from "./app.thunk";
 
 const initialState = {
   initialized: false,
   settings: {
-    theme: 'dark',
+    theme: "light",
     duration: 1800,
     volume: 0.5,
   },
 };
 
 const appReducer = createSlice({
-  name: 'settings',
+  name: "settings",
   initialState,
   extraReducers: builder => {
     builder.addCase(init.fulfilled, (state, action) => {
-      state.initialized = true
+      state.initialized = true;
       state.settings = { ...state.settings, ...action.payload };
     });
 
     builder.addCase(setTheme.fulfilled, (state, action) => {
-      state.settings.theme = action.payload
+      state.settings.theme = action.payload;
     });
 
     builder.addCase(setVolume.fulfilled, (state, action) => {
